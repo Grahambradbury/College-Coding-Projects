@@ -1,0 +1,173 @@
+import java.util.Arrays;
+
+public class SimpleAlgos{
+	
+	
+
+	public static void main(String[] args) {
+		
+		 int[] test = {9,4,3,4,1,9,5,7,8,2,0,46};
+		 insertionSort(test);
+		 System.out.println(Arrays.toString(test)+"insertionSort");
+		 
+			
+		 int[] test2 = {9,4,3,4,1,9,5,7,8,2,0,46};
+		 selectionSort(test2);
+		 System.out.println(Arrays.toString(test2)+"selectionSort");
+		 
+		 int[] test3 = {9,4,3,4,1,9,5,7,8,2,0,46};
+		 mergeSort(test3);
+		 System.out.println(Arrays.toString(test3)+"mergeSort");
+		 
+		 int[] test4 = {9,4,3,4,1,9,5,7,8,2,0,46};
+		 quickSort(test4);
+		 System.out.println(Arrays.toString(test4)+"quickSort");
+	}
+	
+	public static void insertionSort(int[] arr){
+		int length = arr.length;
+		
+		for(int i = 1; i<length; i+=1) {
+			
+			int temp = arr[i];
+			int j = i-1;
+			while(j>-1 && arr[j]> temp) {
+			
+				arr[j+1] = arr[j];
+				j-=1;
+			}
+			arr[j+1] = temp;
+		}
+		
+	}
+	
+	public static void selectionSort(int[] arr){
+		int length = arr.length;
+		
+		for(int i=0;i<length-1; i+=1) {
+			
+			int jmin = arr[i];
+			
+			for(int j=i+1; j<length; j+=1) {
+				
+				if(arr[j]<arr[jmin]) {
+					
+					jmin = j;
+				}
+			}
+			int temp = arr[i];
+			arr[i] = arr[jmin];
+			arr[jmin] = temp;
+		}	
+	}
+	
+	public static void mergeSort(int[] arr){
+		int n = arr.length;
+		if(n<=1)
+			return; 
+		int m = n/2;
+		int[] left = new int[m];
+		int[] right = new int[n-m];
+		
+		for(int i=0;i<left.length;i+=1) {
+			left[i] = arr[i];
+		}
+		for(int i=0;i<right.length;i+=1) {
+			right[i] = arr[i+m];
+		}
+
+		mergeSort(left);
+		mergeSort(right);
+
+		int[] temp = merge(left, right);
+		//why the heck do I need to do this??????
+		for(int i=0;i<temp.length;i+=1) {
+			arr[i] = temp[i];
+		}
+		 //arr =merge(left, right);
+
+		
+	}
+	 
+	public static int[] merge(int[] left, int[] right){
+		
+		
+		int p = left.length;
+		int q = right.length;
+		int[] comb = new int[p + q];
+		int i=0,j=0,s=0;
+		while(i<p && j<q) {
+			
+			if(left[i]<= right[j]) {
+				comb[s] = left[i];
+				i+=1;
+
+			} 
+			else {
+				comb[s] = right[j];
+				j+=1;
+				
+			}
+			s+=1;
+		}
+		if(i>=p) {
+			for(; j< q ; j+=1) {
+				comb[s]= right[j];
+				s+=1;
+			}
+			
+		}
+		else {
+			for(; i< p; i+=1) {
+				comb[s]= left[i];
+				s+=1;
+				
+			}
+		}
+
+		return comb;
+		
+		
+	}
+	
+	public static void quickSort(int[] arr){
+	
+		quickSortRec(arr, 0, arr.length-1);	
+	}
+	
+	public static void quickSortRec   (int[] arr, int first, int last) 
+	{ 
+		//System.out.println(Arrays.toString(arr)+"quixck");
+		 if (first >= last) return; 
+		 int p = partition(arr, first, last); 
+		 quickSortRec(arr, first, p - 1); 
+		 quickSortRec(arr, p + 1, last); 
+		} 
+	
+	public static int partition(int[] arr,int first,int last) { 
+	 // Use the last element as the pivot. 
+	 int pivot = arr[last];  
+	 int i = first -  1;
+	 
+	 for (int j = first; j < last; j+=1) {
+		 if(arr[j] <= pivot){ 
+			 i+=1;  
+			int temp = arr[i];
+			arr[i] = arr[j];
+			arr[j] = temp;	 
+		 }
+	 }
+	 // Now put pivot in position i+1. 
+	 //pivot = arr[i+1];  
+	 int temp = arr[i+1];
+	 arr[i+1] = arr[last];
+	 arr[last] = temp;
+	 //swap arr[i+1] and arr[last ]   !!!;
+	 
+	 
+	 return i + 1;
+	
+		  
+	}
+
+}
